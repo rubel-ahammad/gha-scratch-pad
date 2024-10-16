@@ -1,0 +1,37 @@
+name: Release
+run-name: release with pull request
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source @ ${{ github.ref }}
+        uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Match label for version bump
+        id: bump
+        uses: zwaldowski/match-label-action@v4
+        with:
+          allowed: patch
+          default_match: patch
+
+      - name: Tag new version
+        id: tag
+        uses: zwaldowski/semver-release-action@v3
+        with:
+          bump: ${{ steps.bump.outputs.match }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          per_branch: true
+
+      - name: Release new version
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag.outputs.version_tag }}
+          generateReleaseNotes: true
+          token: ${{ secrets.GITHUB_TOKEN }}
