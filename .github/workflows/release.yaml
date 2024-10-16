@@ -28,10 +28,9 @@ jobs:
           bump: ${{ steps.bump.outputs.match }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           per_branch: true
+          dry_run: true
 
       - name: Release new version
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.tag.outputs.version_tag }}
-          generateReleaseNotes: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Release version: ${{ steps.tag.outputs.version }}"
+          echo "Release tag: ${{ steps.tag.outputs.version_tag }}"
