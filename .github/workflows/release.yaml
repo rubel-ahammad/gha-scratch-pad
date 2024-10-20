@@ -32,5 +32,6 @@ jobs:
 
       - name: Release new version
         run: |
+          echo "Allowed: ${{ github.ref == 'main' && 'major, minor, patch' || (startsWith(github.ref, 'migration-') && 'minor, patch' || 'patch') }}"
           echo "Release version: ${{ steps.tag.outputs.version }}"
           echo "Release tag: ${{ steps.tag.outputs.version_tag }}"
