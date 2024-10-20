@@ -2,6 +2,13 @@ name: Release
 run-name: release with pull request
 on:
   workflow_dispatch:
+  pull_request:
+    types: [ closed ]
+    branches:
+      - main
+      - maintenance-*
+      - migration-*
+      - rc-*
 
 jobs:
   release:
@@ -32,5 +39,6 @@ jobs:
 
       - name: Release new version
         run: |
+          echo "Allowed: ${{ github.ref_name == 'main' && 'major, minor, patch' || (startsWith(github.ref_name, 'maintenance-') && 'minor, patch' || 'patch') }}"
           echo "Release version: ${{ steps.tag.outputs.version }}"
           echo "Release tag: ${{ steps.tag.outputs.version_tag }}"

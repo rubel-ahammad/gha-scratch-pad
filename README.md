@@ -1,4 +1,4 @@
 # gha-scratch-pad
 Github Action Scratch Pad
 
-Branch: maintenance patch 1
+Branch: Maintenance v1
