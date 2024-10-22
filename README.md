@@ -1,4 +1,4 @@
 # gha-scratch-pad
 Github Action Scratch Pad
 
-Branch: Main v1
+Release: 0.0.1
