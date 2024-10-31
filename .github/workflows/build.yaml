@@ -10,9 +10,9 @@ jobs:
     strategy:
       matrix:
         image_variant:
-          - main
-          - fips
-          - native
+          - "main"
+          - "fips"
+          - "native"
 
     steps:
       - name: Checkout source @ ${{ github.ref }}
