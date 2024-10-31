@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         image_variant:
-          - "main"
+          - "mainn"
           - "fips"
           - "native"
 
@@ -24,7 +24,7 @@ jobs:
       - name: Output image tag
         id: image_tag
         run: |
-          echo "IMAGE_TAG=${{ format('{0}{1}{2}', '1.0.0', matrix.image_variant == 'main' && '' || '-', matrix.image_variant == 'main' && '' || matrix.image_variant) }}" >> "$GITHUB_OUTPUT"
+          echo "IMAGE_TAG=${{ format('{0}{1}{2}', '1.0.0', matrix.image_variant == 'mainn' && '' || '-', matrix.image_variant == 'mainn' && '' || matrix.image_variant) }}" >> "$GITHUB_OUTPUT"
 
       - name: Run build
         run: |
