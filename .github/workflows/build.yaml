@@ -22,4 +22,4 @@ jobs:
 
       - name: Run build
         run: |
-            echo "Building on ${{ matrix.arch == 'amd64' && 'x86_64' || 'aarch64' }}"
+            echo "Building on ${{ format('{0}{1}', matrix.arch == 'amd64' && 'x86_64' || 'aarch64', matrix.arch == 'amd64' && 'x86_64-2' || 'aarch64-2') }}"
