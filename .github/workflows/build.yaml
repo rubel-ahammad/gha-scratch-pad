@@ -1,0 +1,25 @@
+name: Build
+run-name: Build
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        arch:
+          - amd64
+          - arm64
+
+    steps:
+      - name: Checkout source @ ${{ github.ref }}
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run build
+        run: |
+            echo "Building on ${{ matrix.arch == 'amd64' && 'x86_64' || 'aarch64' }}"
