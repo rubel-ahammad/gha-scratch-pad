@@ -9,9 +9,10 @@ jobs:
 
     strategy:
       matrix:
-        arch:
-          - amd64
-          - arm64
+        image_variant:
+          - main
+          - fips
+          - native
 
     steps:
       - name: Checkout source @ ${{ github.ref }}
@@ -20,6 +21,11 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Output image tag
+        id: image_tag
+        run: |
+          echo "IMAGE_TAG=${{ format('{0}{1}{2}', '1.0.0', matrix.image_variant == 'main' && '' || '-', matrix.image_variant == 'main' && '' || matrix.image_variant) }}" >> "$GITHUB_OUTPUT"
+
       - name: Run build
         run: |
-            echo "Building on ${{ format('{0}{1}', matrix.arch == 'amd64' && 'x86_64' || 'aarch64', matrix.arch == 'amd64' && 'x86_64-2' || 'aarch64-2') }}"
+            echo $IMAGE_TAG
