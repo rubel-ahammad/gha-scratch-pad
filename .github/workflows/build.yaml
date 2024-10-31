@@ -22,8 +22,4 @@ jobs:
       - name: Output image tag
         id: image_tag
         run: |
-          echo "IMAGE_TAG=${{ format('{0}{1}{2}', '1.0.0', matrix.image_variant == 'mainn' && '' || '-', matrix.image_variant == 'mainn' && '' || matrix.image_variant) }}" >> "$GITHUB_OUTPUT"
-
-      - name: Run build
-        run: |
-            echo $IMAGE_TAG
+          echo "IMAGE_TAG=${{ format('{0}{1}{2}', '1.0.0', matrix.image_variant == 'mainn' && 'y' || 'n', matrix.image_variant == 'mainn' && 'y' || matrix.image_variant) }}" >> "$GITHUB_OUTPUT"
