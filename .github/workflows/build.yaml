@@ -11,8 +11,6 @@ jobs:
       matrix:
         image_variant:
           - "mainn"
-          - "fips"
-          - "native"
 
     steps:
       - name: Checkout source @ ${{ github.ref }}
