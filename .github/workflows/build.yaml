@@ -11,6 +11,7 @@ jobs:
       max-parallel: 4
       matrix:
         arch: [ amd64, arm64 ]
+        image_module: [ dev-sso, dev-sso2, dev-sso3 ]
         include:
           - arch: amd64
             runner: ubuntu-latest
@@ -18,9 +19,6 @@ jobs:
           - arch: arm64
             runner: ubicloud-standard-2-arm
             publish_task: dockerPushImage
-          - image_module: dev-sso
-          - image_module: dev-sso2
-          - image_module: dev-sso3
     steps:
       - name: Checkout source @ ${{ github.ref }}
         uses: actions/checkout@v4
