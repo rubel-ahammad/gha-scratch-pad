@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-images:
     runs-on: ubuntu-latest
 
     strategy:
@@ -12,12 +12,13 @@ jobs:
       matrix:
         arch: [ amd64, arm64 ]
         image: [ dev-sso, file-data ]
-        package: [ dev-sso, mysql ]
         include:
           - arch: amd64
-            package: dev-sso
-          - arch: amd64
-            package: mysql
+            runner: ubuntu-latest
+            publish_task: publish
+          - arch: arm64
+            runner: ubicloud-standard-2-arm
+            publish_task: dockerPushImage
 
     steps:
       - name: Checkout source @ ${{ github.ref }}
@@ -29,4 +30,20 @@ jobs:
           echo "Arch ${{ matrix.arch }}"
           echo "Publish task ${{ matrix.publish_task }}"
           echo "Image ${{ matrix.image }}"
-          echo "Package ${{ matrix.package }}"
+
+  build-packages:
+    runs-on: ubuntu-latest
+
+    strategy:
+      max-parallel: 4
+      matrix:
+        package: [ dev-sso, mysql ]
+
+    steps:
+      - name: Checkout source @ ${{ github.ref }}
+        uses: actions/checkout@v4
+
+      - name: Run
+        run: |
+          echo "Publish task ${{ matrix.publish_task }}"
+          echo "Image ${{ matrix.image }}"
