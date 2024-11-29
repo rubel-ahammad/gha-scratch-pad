@@ -12,12 +12,6 @@ jobs:
       matrix:
         arch: [ amd64, arm64 ]
         include:
-          - arch: amd64
-            runner: ubuntu-latest
-            publish_task: publish
-          - arch: arm64
-            runner: ubicloud-standard-2-arm
-            publish_task: dockerPushImage
           - image: dev-sso
           - image: file-data
           - arch: amd64
