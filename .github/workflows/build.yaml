@@ -11,7 +11,6 @@ jobs:
       max-parallel: 4
       matrix:
         arch: [ amd64, arm64 ]
-        image_module: [ dev-sso, dev-sso2, dev-sso3 ]
         include:
           - arch: amd64
             runner: ubuntu-latest
@@ -19,23 +18,21 @@ jobs:
           - arch: arm64
             runner: ubicloud-standard-2-arm
             publish_task: dockerPushImage
+          - image: dev-sso
+          - image: file-data
           - arch: amd64
-            publish_task: publish
-            helm_package: dev-sso
+            package: dev-sso
           - arch: amd64
-            publish_task: publish
-            helm_package: mysql
-          - arch: amd64
-            publish_task: publish
-            helm_package: ngrok
+            package: mysql
+
     steps:
       - name: Checkout source @ ${{ github.ref }}
         uses: actions/checkout@v4
 
       - name: Run
         run: |
-          echo "Running on ${{ matrix.runner }}"
-          echo "Running on ${{ matrix.arch }}"
-          echo "Running on ${{ matrix.publish_task }}"
-          echo "Running on ${{ matrix.image_module }}"
-          echo "Running on ${{ matrix.helm_packages }}"
+          echo "Runner ${{ matrix.runner }}"
+          echo "Arch ${{ matrix.arch }}"
+          echo "Publish task ${{ matrix.publish_task }}"
+          echo "Image ${{ matrix.image }}"
+          echo "Package ${{ matrix.package }}"
