@@ -20,6 +20,7 @@ jobs:
         with:
           ref: ${{ github.event_name == 'schedule' && 'main' || '' }}
           fetch-depth: ${{ startsWith(github.ref_name, 'maintenance-') && 0 || 1 }}
+          fetch-tags: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Match label for version bump
