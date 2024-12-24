@@ -19,7 +19,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event_name == 'schedule' && 'main' || '' }}
-          fetch-depth: 0
+          fetch-depth: ${{ startsWith(github.ref_name, 'maintenance-') && 0 || 1 }}
+          fetch-tags: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Match label for version bump
@@ -36,10 +37,11 @@ jobs:
           bump: ${{ steps.bump.outputs.match }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           per_branch: ${{ (startsWith(github.ref_name, 'migration-') || startsWith(github.ref_name, 'rc-')) && true || false }}
+          dry_run: true
 
-      - name: Release new version
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.tag.outputs.version_tag }}
-          generateReleaseNotes: true
-          token: ${{ steps.app-token.outputs.token }}
+#      - name: Release new version
+#        uses: ncipollo/release-action@v1
+#        with:
+#          tag: ${{ steps.tag.outputs.version_tag }}
+#          generateReleaseNotes: true
+#          token: ${{ steps.app-token.outputs.token }}
