@@ -2,8 +2,6 @@ name: Release
 run-name: release with pull request
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '*/1 * * * *'
   pull_request:
     types: [ closed ]
     branches:
