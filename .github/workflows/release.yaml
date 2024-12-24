@@ -35,7 +35,7 @@ jobs:
         with:
           bump: ${{ steps.bump.outputs.match }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          per_branch: true
+          per_branch: ${{ (startsWith(github.ref_name, 'migration-') || startsWith(github.ref_name, 'rc-')) && true || false }}
 
       - name: Release new version
         uses: ncipollo/release-action@v1
