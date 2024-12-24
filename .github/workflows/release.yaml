@@ -2,6 +2,8 @@ name: Release
 run-name: release with pull request
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '*/1 * * * *'
   pull_request:
     types: [ closed ]
     branches:
@@ -18,9 +20,9 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'schedule' && 'main' || '' }}
+          ref: ${{ github.event_name == 'schedule' && 'develop' || '' }}
           fetch-depth: 0
-          filter: 'blob:none'
+          filter: blob:none
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Match label for version bump
