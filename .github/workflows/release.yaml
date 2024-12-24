@@ -15,17 +15,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source @ ${{ github.ref }}
+      - name: Checkout source code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: ${{ github.event_name == 'schedule' && 'main' || '' }}
+          fetch-depth: ${{ startsWith(github.ref_name, 'maintenance-') && 0 || 1 }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Match label for version bump
         id: bump
         uses: zwaldowski/match-label-action@v4
         with:
-          allowed: patch
+          allowed: ${{ github.ref_name == 'main' && 'major, minor, patch' || (startsWith(github.ref_name, 'maintenance-') && 'minor, patch' || 'patch') }}
           default_match: patch
 
       - name: Tag new version
