@@ -1,0 +1,49 @@
+name: Build
+run-name: Build
+on:
+  workflow_dispatch:
+
+jobs:
+  build-images:
+    runs-on: ubuntu-latest
+
+    strategy:
+      max-parallel: 4
+      matrix:
+        arch: [ amd64, arm64 ]
+        image: [ dev-sso, file-data ]
+        include:
+          - arch: amd64
+            runner: ubuntu-latest
+            publish_task: publish
+          - arch: arm64
+            runner: ubicloud-standard-2-arm
+            publish_task: dockerPushImage
+
+    steps:
+      - name: Checkout source @ ${{ github.ref }}
+        uses: actions/checkout@v4
+
+      - name: Run
+        run: |
+          echo "Runner ${{ matrix.runner }}"
+          echo "Arch ${{ matrix.arch }}"
+          echo "Publish task ${{ matrix.publish_task }}"
+          echo "Image ${{ matrix.image }}"
+
+  build-packages:
+    runs-on: ubuntu-latest
+
+    strategy:
+      max-parallel: 4
+      matrix:
+        package: [ dev-sso, mysql ]
+
+    steps:
+      - name: Checkout source @ ${{ github.ref }}
+        uses: actions/checkout@v4
+
+      - name: Run
+        run: |
+          echo "Publish task ${{ matrix.publish_task }}"
+          echo "Image ${{ matrix.image }}"
