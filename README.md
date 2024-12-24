@@ -1,4 +1,4 @@
 # gha-scratch-pad
 Github Action Scratch Pad
 
-Release: 1.90.9
+Release: 1.90.10
