@@ -18,7 +18,7 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'schedule' && 'develop' || '' }}
+          ref: ${{ github.event_name == 'schedule' && 'main' || '' }}
           fetch-depth: 0
           filter: blob:none
           token: ${{ secrets.GITHUB_TOKEN }}
