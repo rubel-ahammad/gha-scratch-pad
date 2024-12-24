@@ -19,8 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event_name == 'schedule' && 'main' || '' }}
-          fetch-depth: ${{ startsWith(github.ref_name, 'maintenance-') && 0 || 1 }}
-          fetch-tags: true
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Match label for version bump
