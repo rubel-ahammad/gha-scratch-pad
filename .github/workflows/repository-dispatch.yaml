@@ -1,0 +1,29 @@
+name: repository-dispatch
+run-name: repository dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      build_version:
+        description: 'Build version to integrate'
+        required: true
+        default: 'latest'
+      build_repository:
+        description: 'Build repository to integrate'
+        required: true
+        default: 'gha-scratch-pad1'
+
+jobs:
+  dispatch-repository-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch repository event
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: gha-integration
+          event-type: build-published
+          client-payload: |
+            {
+              "build_version": "1.0.0",
+              "build_repository": "${{ github.event.repository.name }}"
+            }
