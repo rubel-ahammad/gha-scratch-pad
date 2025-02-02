@@ -19,7 +19,7 @@ jobs:
       - name: Dispatch repository event
         uses: peter-evans/repository-dispatch@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT }}
           repository: rubel-ahammad/gha-integration
           event-type: build-published
           client-payload: |
