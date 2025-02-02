@@ -1,5 +1,6 @@
 name: repository-dispatch
-run-name: repository dispatch
+run-name: Dispatch Repository Event - build-published
+
 on:
   workflow_dispatch:
     inputs:
@@ -11,6 +12,10 @@ on:
         description: 'Build repository to integrate'
         required: true
         default: 'gha-scratch-pad1'
+
+concurrency:
+  group: "${{ github.workflow }} @ ${{ github.ref }}"
+  cancel-in-progress: true
 
 jobs:
   dispatch-repository-event:
