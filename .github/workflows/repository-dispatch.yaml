@@ -20,7 +20,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          repository: gha-integration
+          repository: ${{ github.repository }}
           event-type: build-published
           client-payload: |
             {
