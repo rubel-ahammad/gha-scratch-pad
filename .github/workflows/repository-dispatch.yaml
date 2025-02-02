@@ -24,6 +24,6 @@ jobs:
           event-type: build-published
           client-payload: |
             {
-              "build_version": "1.0.0",
-              "build_repository": "${{ github.event.repository.name }}"
+              "build_version": "${{ github.event.inputs.build_version }}",
+              "build_repository": "${{ github.event.inputs.build_repository }}"
             }
